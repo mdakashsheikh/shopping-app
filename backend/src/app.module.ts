@@ -6,6 +6,7 @@ import { LoggerModule } from 'nestjs-pino';
 @Module({
   imports: [
     LoggerModule.forRootAsync({
+      imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const isProduction = configService.get('NODE_ENV') === 'production'
 
@@ -22,7 +23,8 @@ import { LoggerModule } from 'nestjs-pino';
             }
           }
         }
-      }
+      },
+      inject: [ConfigService]
     }),
     ConfigModule.forRoot(), UsersModule],
   controllers: [],
